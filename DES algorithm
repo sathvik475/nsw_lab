@@ -1,0 +1,61 @@
+import java.security.*;
+import javax.crypto.*;
+import javax.crypto.spec.*;
+public class AES {
+public static String asHex (byte[] buf) {
+StringBuilder strbuf = new StringBuilder(buf.length * 2);
+for (int i = 0; i < buf.length; i++) {
+if ((buf[i] & 0xff) < 0x10) {
+}
+strbuf.append("0");
+strbuf.append(Integer.toHexString(buf[i] & 0xff));
+}
+return strbuf.toString();
+}
+public static void main(String[] args) throws Exception {
+String message = "monisha likes fries!!";
+// Get the KeyGenerator
+KeyGenerator kgen KeyGenerator.getInstance("AES");
+kgen.init(128); // 192 and 256 bits may not be available
+// Generate the secret key
+SecretKey skey = kgen.generateKey();
+byte[] raw = skey.getEncoded();
+SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+// Instantiate the cipher
+Cipher cipher Cipher.getInstance("AES");
+// Encrypt
+cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+byte[] encrypted = cipher.doFinal (message.getBytes());
+System.out.println("Encrypted string: + asHex(encrypted));
+// Decrypt
+cipher.init(Cipher. DECRYPT_MODE, skeySpec);
+byte[] original cipher.doFinal (encrypted);
+String originalString = new String(original);
+System.out.println("Original string: 38 + originalString);
+}
+}
+return encryptedString;
+}
+public String decrypt(String encryptedString) {
+String decryptedText = null;
+try {
+cipher.init(Cipher. DECRYPT_MODE, key);
+byte[] encryptedText = Base64.getDecoder().decode(encryptedString);
+byte[] plainText = cipher.doFinal(encryptedText);
+decryptedText = new String(plainText, UNICODE_FORMAT);
+} catch (Exception e) {
+e.printStackTrace();
+}
+return decryptedText;
+}
+public static void main(String[] args) throws Exception {
+System.out.print("Enter the string: ");
+String stringToEncrypt = br.readLine();
+= DES myEncryptor new DES();
+= String encrypted myEncryptor.encrypt(stringToEncrypt);
+String decrypted = myEncryptor.decrypt(encrypted);
+System.out.println("\nString To Encrypt: + stringToEncrypt);
+System.out.println("\nEncrypted Value: + encrypted);
+}
+System.out.println("\nDecrypted Value: + decrypted);
+}
